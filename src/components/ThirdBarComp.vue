@@ -20,8 +20,8 @@ onMounted(() => {
     grid: {
       left: '3%',
       right: '0',
-      bottom: '5%',
-      containLabel: true,
+      bottom: '12%',
+      containLabel: false, // 为了保证x轴axisLabel 旋转后 轴线依然能对齐 需要设为false
     },
     tooltip: {
       trigger: 'axis',
@@ -30,10 +30,13 @@ onMounted(() => {
       {
         name: '寒冷地区',
         nameLocation: 'middle',
-        nameGap: 26,
+        nameGap: 50,
         type: 'category',
         data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         axisTick: { show: false, alignWithLabel: true },
+        axisLabel: {
+          rotate: 60
+        }
       },
     ],
     yAxis: [
@@ -77,17 +80,20 @@ onMounted(() => {
     grid: {
       left: '0',
       right: '0',
-      bottom: '5%',
-      containLabel: true,
+      bottom: '12%',
+      containLabel: false,
     },
     xAxis: [
       {
         name: '寒冷地区',
         nameLocation: 'middle',
-        nameGap: 26,
+        nameGap: 50,
         type: 'category',
-        data: ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', ''],
+        data: ['', 'MonMon', 'TueMon', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', ''],
         axisTick: { show: false, alignWithLabel: true },
+        axisLabel: {
+          rotate: 60
+        }
       },
     ],
     tooltip: {
@@ -152,8 +158,8 @@ onMounted(() => {
     grid: {
       left: '0',
       right: '4%',
-      bottom: '5%',
-      containLabel: true,
+      bottom: '12%',
+      containLabel: false,
     },
     tooltip: {
       trigger: 'axis',
@@ -162,12 +168,15 @@ onMounted(() => {
       {
         name: '寒冷地区',
         nameLocation: 'middle',
-        nameGap: 26,
+        nameGap: 50,
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        data: ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         axisTick: {
           alignWithLabel: true,
         },
+        axisLabel: {
+          rotate: 60
+        }
       },
     ],
     yAxis: [
@@ -183,7 +192,7 @@ onMounted(() => {
         name: 'Direct',
         type: 'bar',
         barWidth: '60%',
-        data: [10, 52, 200, 334, 390, 330, 220],
+        data: ['', 10, 52, 200, 334, 390, 330, 220],
         markLine: {
           symbol: 'none',
           lineStyle: {
@@ -191,6 +200,7 @@ onMounted(() => {
           },
           data: [
             {
+              x: '10%', // markline左边间隔
               yAxis: 240,
             },
           ],
@@ -246,6 +256,7 @@ const updateYaxisValue = () => {
 };
 
 const handleDownload = () => {
+  // 图表无背景色 需要给图表父容器加上 背景色类名或行内样式 否则下载下来是透明的 误以为内容丢失
   html2canvas(document.getElementById('barContainer')).then(function (canvas) {
     var img = canvas
       .toDataURL('image/png')
@@ -271,7 +282,7 @@ defineProps({
 const count = ref(0);
 </script>
 <template>
-  <h1 @click="updateYaxisValue">{{ msg }}</h1>
+  <h1 @click="updateYaxisValue">{{ msg }} 点击对齐轴线</h1>
   <h2 @click="handleDownload">下载</h2>
   <div class="bar-container" id="barContainer">
     <div ref="mainRef" class="bar"></div>
